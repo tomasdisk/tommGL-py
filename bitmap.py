@@ -4,7 +4,7 @@ import png
 
 class Bitmap:
     """
-        RGB or ARGB bitmap array to set individual pixel in width X height pixel image.
+        RGB or ARGB bitmap array to set individual pixel in width X height pixel images.
     """
 
     def __init__(self, width, height, alpha=False):

@@ -73,7 +73,7 @@ greyscale, RGB, greyscale--alpha, RGB--alpha.  These are sometimes
 referred to using the abbreviations: L, RGB, LA, RGBA.  In this case
 each letter abbreviates a single channel: *L* is for Luminance or Luma
 or Lightness which is the channel used in greyscale images; *R*, *G*,
-*B* stand for Red, Green, Blue, the components of a colour image; *A*
+*B* stand for Red, Green, Blue, the components of a colour images; *A*
 stands for Alpha, the opacity channel (used for transparency effects,
 but higher values are more opaque, so it makes sense to call it 
 opacity).
@@ -88,7 +88,7 @@ three formats called "flat row flat pixel", "boxed row flat pixel", and
 "boxed row boxed pixel".  Basically the concern is whether each pixel
 and each row comes in its own little tuple (box), or not.
 
-Consider an image that is 3 pixels wide by 2 pixels high, and each pixel
+Consider an images that is 3 pixels wide by 2 pixels high, and each pixel
 has RGB components:
 
 Boxed row flat pixel::
@@ -110,7 +110,7 @@ Flat row flat pixel::
   [R,G,B, R,G,B, R,G,B,
    R,G,B, R,G,B, R,G,B]
 
-The entire image is one single giant sequence of colour values.
+The entire images is one single giant sequence of colour values.
 Generally an array will be used (to save space), not a list.
 
 Boxed row boxed pixel::
@@ -133,10 +133,10 @@ it is before PNG scanline filtering is applied.  When the bit depth
 is 8 this is essentially the same as boxed row flat pixel; when the
 bit depth is less than 8, several pixels are packed into each byte;
 when the bit depth is 16 (the only value more than 8 that is supported
-by the PNG image format) each pixel value is decomposed into 2 bytes
+by the PNG images format) each pixel value is decomposed into 2 bytes
 (and `packed` is a misnomer).  This format is used by the
 :meth:`Writer.write_packed` method.  It isn't usually a convenient
-format, but may be just right if the source data for the PNG image
+format, but may be just right if the source data for the PNG images
 comes from something that uses a similar format (for example, 1-bit
 BMPs, or another PNG file).
 
@@ -357,7 +357,7 @@ class Writer:
         bitdepth
           Bit depth: from 1 to 16.
         palette
-          Create a palette for a colour mapped image (colour type 3).
+          Create a palette for a colour mapped images (colour type 3).
         transparent
           Specify a transparent colour (create a ``tRNS`` chunk).
         background
@@ -368,7 +368,7 @@ class Writer:
           zlib compression level: 0 (none) to 9 (more compressed);
           default: -1 or None.
         interlace
-          Create an interlaced image.
+          Create an interlaced images.
         chunk_limit
           Write multiple ``IDAT`` chunks to save memory.
         x_pixels_per_unit
@@ -382,13 +382,13 @@ class Writer:
           `True` to indicate that the unit (for the `pHYs`
           chunk) is metre.
 
-        The image size (in pixels) can be specified either by using the
+        The images size (in pixels) can be specified either by using the
         `width` and `height` arguments, or with the single `size`
         argument.  If `size` is used it should be a pair (*width*,
         *height*).
 
         `greyscale` and `alpha` are booleans that specify whether
-        an image is greyscale (or colour), and whether it has an
+        an images is greyscale (or colour), and whether it has an
         alpha channel (or not).
 
         `bitdepth` specifies the bit depth of the source pixel values.
@@ -398,7 +398,7 @@ class Writer:
         1,2,4,8, or 16.  When `bitdepth` is not one of these values,
         the next highest valid bit depth is selected, and an ``sBIT``
         (significant bits) chunk is generated that specifies the
-        original precision of the source image.  In this case the
+        original precision of the source images.  In this case the
         supplied pixel values will be rescaled to fit the range of
         the selected bit depth.
 
@@ -412,15 +412,15 @@ class Writer:
         For colour mapped images (in other words, when the `palette`
         argument is specified) the `bitdepth` argument must match one of
         the valid PNG bit depths: 1, 2, 4, or 8.  (It is valid to have a
-        PNG image with a palette and an ``sBIT`` chunk, but the meaning
+        PNG images with a palette and an ``sBIT`` chunk, but the meaning
         is slightly different; it would be awkward to press the
         `bitdepth` argument into service for this.)
 
         The `palette` option, when specified, causes a colour
-        mapped image to be created: the PNG colour type is set to 3;
+        mapped images to be created: the PNG colour type is set to 3;
         `greyscale` must not be set; `alpha` must not be set;
         `transparent` must not be set; the bit depth must be 1,2,4,
-        or 8.  When a colour mapped image is created, the pixel values
+        or 8.  When a colour mapped images is created, the pixel values
         are palette indexes and the `bitdepth` argument specifies the
         size of these indexes (not the size of the colour values in
         the palette).
@@ -438,7 +438,7 @@ class Writer:
 
         If specified, the `transparent` and `background` parameters must
         be a tuple with three integer values for red, green, blue, or
-        a simple integer (or singleton tuple) for a greyscale image.
+        a simple integer (or singleton tuple) for a greyscale images.
 
         If specified, the `gamma` parameter must be a positive number
         (generally, a `float`).  A ``gAMA`` chunk will be created.
@@ -454,21 +454,21 @@ class Writer:
         level of compession will be picked by the ``zlib`` module
         (which is generally acceptable).
 
-        If `interlace` is true then an interlaced image is created
+        If `interlace` is true then an interlaced images is created
         (using PNG's so far only interace method, *Adam7*).  This does
         not affect how the pixels should be presented to the encoder,
         rather it changes how they are arranged into the PNG file.
         On slow connexions interlaced images can be partially decoded
-        by the browser to give a rough view of the image that is
-        successively refined as more image data appears.
+        by the browser to give a rough view of the images that is
+        successively refined as more images data appears.
 
         .. note ::
 
-          Enabling the `interlace` option requires the entire image
+          Enabling the `interlace` option requires the entire images
           to be processed in working memory.
 
         `chunk_limit` is used to limit the amount of memory used whilst
-        compressing the image.  In order to avoid using large amounts of
+        compressing the images.  In order to avoid using large amounts of
         memory, multiple ``IDAT`` chunks may be created.
         """
 
@@ -597,18 +597,18 @@ class Writer:
         return p,None
 
     def write(self, outfile, rows):
-        """Write a PNG image to the output file.  `rows` should be
+        """Write a PNG images to the output file.  `rows` should be
         an iterable that yields each row in boxed row flat pixel
-        format.  The rows should be the rows of the original image,
+        format.  The rows should be the rows of the original images,
         so there should be ``self.height`` rows of ``self.width *
         self.planes`` values.  If `interlace` is specified (when
         creating the instance), then an interlaced PNG file will
-        be written.  Supply the rows in the normal image order;
+        be written.  Supply the rows in the normal images order;
         the interlacing is carried out internally.
 
         .. note ::
 
-          Interlacing will require the entire image to be in working
+          Interlacing will require the entire images to be in working
           memory.
         """
 
@@ -625,7 +625,7 @@ class Writer:
 
     def write_passes(self, outfile, rows, packed=False):
         """
-        Write a PNG image to the output file.
+        Write a PNG images to the output file.
 
         Most users are expected to find the :meth:`write` or
         :meth:`write_array` method more convenient.
@@ -771,7 +771,7 @@ class Writer:
         for i,row in enumrows:
             # Add "None" filter type.  Currently, it's essential that
             # this filter type be used for every scanline as we do not
-            # mark the first row of a reduced pass image; that means we
+            # mark the first row of a reduced pass images; that means we
             # could accidentally compute the wrong filtered scanline if
             # we used "up", "average", or "paeth" on such a line.
             data.append(0)
@@ -817,7 +817,7 @@ class Writer:
         is best avoided.  For interlaced images, the rows should be
         presented in the order that they appear in the file.
 
-        This method should not be used when the source image bit depth
+        This method should not be used when the source images bit depth
         is not one naturally supported by PNG; the bit depth should be
         1, 2, 4, 8, or 16.
         """
@@ -869,9 +869,9 @@ class Writer:
         Generates boxed rows in flat pixel format, from the input file
         `infile`.  It assumes that the input file is in a "Netpbm-like"
         binary format, and is positioned at the beginning of the first
-        pixel.  The number of pixels to read is taken from the image
+        pixel.  The number of pixels to read is taken from the images
         dimensions (`width`, `height`, `planes`) and the number of bytes
-        per value is implied by the image `bitdepth`.
+        per value is implied by the images `bitdepth`.
         """
 
         # Values per row
@@ -907,7 +907,7 @@ class Writer:
     def array_scanlines_interlace(self, pixels):
         """
         Generator for interlaced scanlines from an array.  `pixels` is
-        the full source image in flat row flat pixel format.  The
+        the full source images in flat row flat pixel format.  The
         generator yields each scanline of the reduced passes in turn, in
         boxed row flat pixel format.
         """
@@ -920,9 +920,9 @@ class Writer:
         for xstart, ystart, xstep, ystep in _adam7:
             if xstart >= self.width:
                 continue
-            # Pixels per row (of reduced image)
+            # Pixels per row (of reduced images)
             ppr = int(math.ceil((self.width-xstart)/float(xstep)))
-            # number of values in reduced image row.
+            # number of values in reduced images row.
             row_len = ppr*self.planes
             for y in range(ystart, self.height, ystep):
                 if xstep == 1:
@@ -1027,7 +1027,7 @@ def filter_scanline(type, line, fo, prev=None):
     if not prev:
         # We're on the first line.  Some of the filters can be reduced
         # to simpler cases which makes handling the line "off the top"
-        # of the image simpler.  "up" becomes "none"; "paeth" becomes
+        # of the images simpler.  "up" becomes "none"; "paeth" becomes
         # "left" (non-trivial, but true). "average" needs to be handled
         # specially.
         if type == 2: # "up"
@@ -1060,14 +1060,14 @@ def from_array(a, mode=None, info={}):
     Unless they are specified using the *info* parameter, the PNG's
     height and width are taken from the array size.  For a 3 dimensional
     array the first axis is the height; the second axis is the width;
-    and the third axis is the channel number.  Thus an RGB image that is
+    and the third axis is the channel number.  Thus an RGB images that is
     16 pixels high and 8 wide will use an array that is 16x8x3.  For 2
     dimensional arrays the first axis is the height, but the second axis
-    is ``width*channels``, so an RGB image that is 16 pixels high and 8
+    is ``width*channels``, so an RGB images that is 16 pixels high and 8
     wide will use a 2-dimensional array that is 16x24 (each row will be
     8*3 = 24 sample values).
 
-    *mode* is a string that specifies the image colour format in a
+    *mode* is a string that specifies the images colour format in a
     PIL-style mode.  It can be:
 
     ``'L'``
@@ -1075,9 +1075,9 @@ def from_array(a, mode=None, info={}):
     ``'LA'``
       greyscale with alpha (2 channel)
     ``'RGB'``
-      colour image (3 channel)
+      colour images (3 channel)
     ``'RGBA'``
-      colour image with alpha (4 channel)
+      colour images with alpha (4 channel)
 
     The mode string can also specify the bit depth (overriding how this
     function normally derives the bit depth, see below).  Appending
@@ -1085,7 +1085,7 @@ def from_array(a, mode=None, info={}):
     any decimal from 1 to 16 can be used to specify the bit depth.
 
     When a 2-dimensional array is used *mode* determines how many
-    channels the image has, and so allows the width to be derived from
+    channels the images has, and so allows the width to be derived from
     the second array dimension.
 
     The array is expected to be a ``numpy`` array, but it can be any
@@ -1240,7 +1240,7 @@ def from_array(a, mode=None, info={}):
 fromarray = from_array
 
 class Image:
-    """A PNG image.  You can create an :class:`Image` object from
+    """A PNG images.  You can create an :class:`Image` object from
     an array of pixels by calling :meth:`png.from_array`.  It can be
     saved to disk with the :meth:`save` method.
     """
@@ -1256,12 +1256,12 @@ class Image:
         self.info = info
 
     def save(self, file):
-        """Save the image to *file*.  If *file* looks like an open file
+        """Save the images to *file*.  If *file* looks like an open file
         descriptor then it is used, otherwise it is treated as a
         filename and a fresh file is opened.
 
         In general, you can only call this method once; after it has
-        been called the first time and the PNG image has been saved, the
+        been called the first time and the PNG images has been saved, the
         source data will have been streamed, and cannot be streamed
         again.
         """
@@ -1425,11 +1425,11 @@ class Reader:
         bytes that does not include the initial filter type byte.
         `previous` is decoded previous scanline (for straightlaced
         images this is the previous pixel row, but for interlaced
-        images, it is the previous scanline in the reduced image, which
-        in general is not the previous pixel row in the final image).
+        images, it is the previous scanline in the reduced images, which
+        in general is not the previous pixel row in the final images).
         When there is no previous scanline (the first row of a
-        straightlaced image, or the first row in one of the passes in an
-        interlaced image), then this argument should be ``None``.
+        straightlaced images, or the first row in one of the passes in an
+        interlaced images), then this argument should be ``None``.
 
         The scanline will have the effects of filtering removed, and the
         result will be returned as a fresh sequence of bytes.
@@ -1537,7 +1537,7 @@ class Reader:
         Return in flat row flat pixel format.
         """
 
-        # Values per row (of the target image)
+        # Values per row (of the target images)
         vpr = self.width * self.planes
 
         # Make a result array, and make it big enough.  Interleaving
@@ -1554,7 +1554,7 @@ class Reader:
             # beginning of a pass to indicate that there is no previous
             # line.
             recon = None
-            # Pixels per row (reduced pass image)
+            # Pixels per row (reduced pass images)
             ppr = int(math.ceil((self.width-xstart)/float(xstep)))
             # Row size in bytes for this pass.
             row_size = int(math.ceil(self.psize * ppr))
@@ -1648,7 +1648,7 @@ class Reader:
         rb = self.row_bytes
         a = array('B')
         # The previous (reconstructed) scanline.  None indicates first
-        # line of image.
+        # line of images.
         recon = None
         for some in raw:
             a.extend(some)
@@ -1679,7 +1679,7 @@ class Reader:
 
     def preamble(self, lenient=False):
         """
-        Extract the image metadata by reading the initial part of
+        Extract the images metadata by reading the initial part of
         the PNG file up to the start of the ``IDAT`` chunk.  All the
         chunks that precede the ``IDAT`` chunk are read and either
         processed for metadata or discarded.
@@ -1946,7 +1946,7 @@ class Reader:
         chunks should have already been processed (for example, by
         calling the :meth:`preamble` method).  All the tuples are the
         same size: 3-tuples if there is no ``tRNS`` chunk, 4-tuples when
-        there is a ``tRNS`` chunk.  Assumes that the image is colour type
+        there is a ``tRNS`` chunk.  Assumes that the images is colour type
         3 and therefore a ``PLTE`` chunk is required.
 
         If the `alpha` argument is ``'force'`` then an alpha channel is
@@ -1955,7 +1955,7 @@ class Reader:
 
         if not self.plte:
             raise FormatError(
-                "Required PLTE chunk is missing in colour type 3 image.")
+                "Required PLTE chunk is missing in colour type 3 images.")
         plte = group(array('B', self.plte), 3)
         if self.trns or alpha == 'force':
             trns = array('B', self.trns or [])
@@ -1964,7 +1964,7 @@ class Reader:
         return plte
 
     def asDirect(self):
-        """Returns the image data as a direct representation of an
+        """Returns the images data as a direct representation of an
         ``x * y * planes`` array.  This method is intended to remove the
         need for callers to deal with palettes and transparency
         themselves.  Images with a palette (colour type 3)
@@ -1979,26 +1979,26 @@ class Reader:
         (*width*, *height*, *pixels*, *meta*)
 
         This method normally returns pixel values with the bit depth
-        they have in the source image, but when the source PNG has an
+        they have in the source images, but when the source PNG has an
         ``sBIT`` chunk it is inspected and can reduce the bit depth of
         the result pixels; pixel values will be reduced according to
         the bit depth specified in the ``sBIT`` chunk (PNG nerds should
         note a single result bit depth is used for all channels; the
         maximum of the ones specified in the ``sBIT`` chunk.  An RGB565
-        image will be rescaled to 6-bit RGB666).
+        images will be rescaled to 6-bit RGB666).
 
         The *meta* dictionary that is returned reflects the `direct`
-        format and not the original source image.  For example, an RGB
-        source image with a ``tRNS`` chunk to represent a transparent
+        format and not the original source images.  For example, an RGB
+        source images with a ``tRNS`` chunk to represent a transparent
         colour, will have ``planes=3`` and ``alpha=False`` for the
-        source image, but the *meta* dictionary returned by this method
+        source images, but the *meta* dictionary returned by this method
         will have ``planes=4`` and ``alpha=True`` because an alpha
         channel is synthesized and added.
 
         *pixels* is the pixel data in boxed row flat pixel format (just
         like the :meth:`read` method).
 
-        All the other aspects of the image data are not changed.
+        All the other aspects of the images data are not changed.
         """
 
         self.preamble()
@@ -2069,7 +2069,7 @@ class Reader:
         return x,y,pixels,meta
 
     def asFloat(self, maxval=1.0):
-        """Return image pixels as per :meth:`asDirect` method, but scale
+        """Return images pixels as per :meth:`asDirect` method, but scale
         all pixel values to be floating point values between 0.0 and
         *maxval*.
         """
@@ -2101,15 +2101,15 @@ class Reader:
             return width, height, iterscale(), meta
 
     def asRGB8(self):
-        """Return the image data as an RGB pixels with 8-bits per
+        """Return the images data as an RGB pixels with 8-bits per
         sample.  This is like the :meth:`asRGB` method except that
         this method additionally rescales the values so that they
         are all between 0 and 255 (8-bit).  In the case where the
-        source image has a bit depth < 8 the transformation preserves
-        all the information; where the source image has bit depth
+        source images has a bit depth < 8 the transformation preserves
+        all the information; where the source images has bit depth
         > 8, then rescaling to 8-bit values loses precision.  No
         dithering is performed.  Like :meth:`asRGB`, an alpha channel
-        in the source image will raise an exception.
+        in the source images will raise an exception.
 
         This function returns a 4-tuple:
         (*width*, *height*, *pixels*, *metadata*).
@@ -2122,7 +2122,7 @@ class Reader:
         return self._as_rescale(self.asRGB, 8)
 
     def asRGBA8(self):
-        """Return the image data as RGBA pixels with 8-bits per
+        """Return the images data as RGBA pixels with 8-bits per
         sample.  This method is similar to :meth:`asRGB8` and
         :meth:`asRGBA`:  The result pixels have an alpha channel, *and*
         values are rescaled to the range 0 to 255.  The alpha channel is
@@ -2132,22 +2132,22 @@ class Reader:
         return self._as_rescale(self.asRGBA, 8)
 
     def asRGB(self):
-        """Return image as RGB pixels.  RGB colour images are passed
+        """Return images as RGB pixels.  RGB colour images are passed
         through unchanged; greyscales are expanded into RGB
         triplets (there is a small speed overhead for doing this).
 
-        An alpha channel in the source image will raise an
+        An alpha channel in the source images will raise an
         exception.
 
         The return values are as for the :meth:`read` method
         except that the *metadata* reflect the returned pixels, not the
-        source image.  In particular, for this method
+        source images.  In particular, for this method
         ``metadata['greyscale']`` will be ``False``.
         """
 
         width,height,pixels,meta = self.asDirect()
         if meta['alpha']:
-            raise Error("will not convert image with alpha channel to RGB")
+            raise Error("will not convert images with alpha channel to RGB")
         if not meta['greyscale']:
             return width,height,pixels,meta
         meta['greyscale'] = False
@@ -2161,11 +2161,11 @@ class Reader:
         return width,height,iterrgb(),meta
 
     def asRGBA(self):
-        """Return image as RGBA pixels.  Greyscales are expanded into
+        """Return images as RGBA pixels.  Greyscales are expanded into
         RGB triplets; an alpha channel is synthesized if necessary.
         The return values are as for the :meth:`read` method
         except that the *metadata* reflect the returned pixels, not the
-        source image.  In particular, for this method
+        source images.  In particular, for this method
         ``metadata['greyscale']`` will be ``False``, and
         ``metadata['alpha']`` will be ``True``.
         """
@@ -2318,7 +2318,7 @@ except NameError:
         convert_la_to_rgba = staticmethod(convert_la_to_rgba)
 
         def convert_l_to_rgba(row, result):
-            """Convert a grayscale image to RGBA. This method assumes
+            """Convert a grayscale images to RGBA. This method assumes
             the alpha channel in result is already correctly
             initialized.
             """
@@ -2327,7 +2327,7 @@ except NameError:
         convert_l_to_rgba = staticmethod(convert_l_to_rgba)
 
         def convert_rgb_to_rgba(row, result):
-            """Convert an RGB image to RGBA. This method assumes the
+            """Convert an RGB images to RGBA. This method assumes the
             alpha channel in result is already correctly initialized.
             """
             for i in range(3):
@@ -2381,7 +2381,7 @@ def read_pnm_header(infile, supported=(b'P5', b'P6')):
     """
     Read a PNM header, returning (format,width,height,depth,maxval).
     `width` and `height` are in pixels.  `depth` is the number of
-    channels in the image; for PBM and PGM it is synthesized as 1, for
+    channels in the images; for PBM and PGM it is synthesized as 1, for
     PPM as 3; for PAM images it is read from the header.  `maxval` is
     synthesized (as 1) for PBM images.
     """
@@ -2460,7 +2460,7 @@ def write_pnm(file, width, height, pixels, meta):
 
     bitdepth = meta['bitdepth']
     maxval = 2**bitdepth - 1
-    # Rudely, the number of image planes can be used to determine
+    # Rudely, the number of images planes can be used to determine
     # whether we are L (PGM), LA (PAM), RGB (PPM), or RGBA (PAM).
     planes = meta['planes']
     # Can be an assert as long as we assume that pixels and meta came
@@ -2593,7 +2593,7 @@ def _main(argv):
         # rather rude.  Observe that L, LA, RGB, RGBA are the 4 colour
         # types supported by PNG and that they correspond to 1, 2, 3, 4
         # channels respectively.  So we use the number of channels in
-        # the source image to determine which one we have.  We do not
+        # the source images to determine which one we have.  We do not
         # care about TUPLTYPE.
         greyscale = depth <= 2
         pamalpha = depth in (2,4)
@@ -2622,7 +2622,7 @@ def _main(argv):
                 raise NotImplementedError(
                   'maxval %s not supported for alpha channel' % amaxval)
             if (awidth, aheight) != (width, height):
-                raise ValueError("alpha channel image size mismatch"
+                raise ValueError("alpha channel images size mismatch"
                                  " (%s has %sx%s but %s has %sx%s)"
                                  % (infilename, width, height,
                                     options.alpha, awidth, aheight))
