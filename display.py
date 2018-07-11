@@ -5,11 +5,12 @@ from timeit import default_timer as timer
 
 
 def circle_cords(tetha):
-    return (tetha % 150 + 50),100
+    print(tetha)
+    r = tetha // 10
+    return int(cos(radians(tetha%360))*r), int(sin(radians(tetha%360))*r)
 
 
 class StatusBar(tk.Frame):
-
 
     def __init__(self, master):
         tk.Frame.__init__(self, master)
@@ -19,6 +20,7 @@ class StatusBar(tk.Frame):
     def set(self, text):
         self.label.config(text=text)
         self.label.update_idletasks()
+
     def clear(self):
         self.label.config(text="")
         self.label.update_idletasks()
@@ -26,7 +28,7 @@ class StatusBar(tk.Frame):
 
 class Display(tk.Frame):
 
-    def __init__(self, parent, width=400, height=400, image:Image=None):
+    def __init__(self, parent, width=400, height=400, image: Image=None):
         tk.Frame.__init__(self, parent)
         self.parent = parent
         self._delta_time = timer()
@@ -55,28 +57,48 @@ class Display(tk.Frame):
 
     def update_display(self, delta_time):
         # self.update_handler
-        # aaa = self.image.copy().putpixel((100, 100), (255, 0, 255, 255))
-        aaa = self.image.copy()
-        self._tk_image = ImageTk.PhotoImage(aaa)
+        # r = self.tetha
+        # g = 0
+        # b = 0
+        # if self.tetha > 255:
+        #     r = 255
+        #     g = self.tetha - 255
+        #     if self.tetha > 510:
+        #         r = 255
+        #         g = 255
+        #         b = self.tetha - 510
+        #         if b == 255:
+        #             self.tetha = 0
+        #
+        # color = (r, g, b)
+
+        x, y = circle_cords(self.tetha)
+        x += self.default_width // 2
+        y += self.default_height // 2
+        # aux = self.image.copy()
+        aux = self.image
+        aux.putpixel((x, y), (255, 255, 255, 255))
+        self._tk_image = ImageTk.PhotoImage(aux.copy())
         self._canvas.itemconfigure(self._c_image, image=self._tk_image)
         self.status_bar.set("FPS: {:.5}".format(1 / delta_time))
-        self.tetha += 1
+        if self.tetha < 2514:
+            self.tetha += 1
+        else:
+            self.image.save('images/im.png', 'PNG')
+            self.tetha = 0
 
     def update_clock(self):
         delta_time = timer() - self._delta_time
         self.update_display(delta_time)
         self._delta_time = timer()
-        self.parent.after(40, self.update_clock)
-
-
-
+        self.parent.after(20, self.update_clock)
 
 
 if __name__ == "__main__":
-    w = 256
-    h = 256
-    im = Image.new(mode='RGBA', size=(w + 1, h + 1), color=(255, 0, 0, 255))
-    im = Image.open("images/im_2046.279406189.png")
+    w = 400
+    h = 400
+    # im.png = Image.new(mode='RGBA', size=(w + 1, h + 1), color=(255, 0, 0, 255))
+    im = Image.open("images/im1_2018-07-11_11:43:01.png")
     w, h = im.size
 
     root = tk.Tk()
