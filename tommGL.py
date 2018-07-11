@@ -1,5 +1,4 @@
 import numpy as np
-from timeit import default_timer as timer
 from math import floor
 
 from bitmap import Bitmap
@@ -12,6 +11,12 @@ class Color:
         self.b = b
         self.a = a
         self.data_type = data_type
+
+    def has_alpha(self):
+        if self.a is None:
+            return False
+        else:
+            return True
 
 
 def line(x0, y0, x1, y1, image: Bitmap, color):
@@ -110,29 +115,31 @@ def line_a(x0, y0, x1, y1, image: Bitmap, color):
             intery = intery + gradient
 
 
-def triangle(x0, y0, x1, y1, x2, y2, image: Bitmap, color):
+def triangle_shape(x0, y0, x1, y1, x2, y2, image: Bitmap, color):
     line(x0, y0, x1, y1, image, color)
     line(x0, y0, x2, y2, image, color)
     line(x2, y2, x1, y1, image, color)
 
 
-def triangle_a(x0, y0, x1, y1, x2, y2, image: Bitmap, color):
+def triangle_a_shape(x0, y0, x1, y1, x2, y2, image: Bitmap, color):
     line_a(x0, y0, x1, y1, image, color)
     line_a(x0, y0, x2, y2, image, color)
     line_a(x2, y2, x1, y1, image, color)
 
 
-h = 256
-w = 256
-im = Bitmap(w, h)
-line_a(10, 10, 150, 30, im, Color(255, 255, 0))
+if __name__ == "__main__":
+    from timeit import default_timer as timer
+    from datetime import datetime as dt
 
-line(10, 20, 150, 40, im, Color(255, 255, 0))
+    h = 256
+    w = 256
+    im = Bitmap(w, h)
 
-triangle(150, 150, 200, 80, 95, 123, im, Color(255, 255, 0))
+    line_a(10, 10, 150, 30, im, Color(255, 255, 0))
+    line(10, 20, 150, 40, im, Color(255, 255, 0))
+    triangle_shape(150, 150, 200, 80, 95, 123, im, Color(255, 255, 0))
+    triangle_a_shape(120, 120, 170, 50, 65, 93, im, Color(255, 255, 0))
 
-triangle_a(120, 120, 170, 50, 65, 93, im, Color(255, 255, 0))
-
-path = "images/im_" + str(timer()) + ".png"
-print("Image saved: " + path)
-im.save_as_png(path)
+    path = "images/im_" + dt.now().strftime("%Y-%m-%d_%H:%M:%S") + ".png"
+    print("Image saved: " + path)
+    im.save_as_png(path)
